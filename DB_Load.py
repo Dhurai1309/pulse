@@ -1,14 +1,12 @@
 import os
 import psycopg2
 import json
-import git
 import pandas as pd
 from sqlalchemy import create_engine
 
 # Sql connection
-# --- Database connection details ---
-db_user = 'postgres'            # change to your actual Postgres username
-db_password = '1309'   # change to your actual Postgres password
+db_user = 'postgres'   
+db_password = '1309'  
 db_host = 'localhost'
 db_port = '5432'
 db_name = 'Phonepe'
@@ -17,7 +15,7 @@ db_name = 'Phonepe'
 engine = create_engine(f'postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
 
 # --- Folder with your CSV files ---
-csv_folder = 'Data_extract'
+csv_folder = r"c:\Users\sdhur\OneDrive\Documents\Phonepe Pulse Analyzer\pulse\Data_Extract"
 
 # --- Loop over each CSV file in the folder ---
 for filename in os.listdir(csv_folder):
@@ -29,7 +27,6 @@ for filename in os.listdir(csv_folder):
 
         # Read CSV into DataFrame
         df = pd.read_csv(file_path)
-        
 
         # Upload DataFrame to Postgres
         df.to_sql(table_name, engine, if_exists='replace', index=False)
